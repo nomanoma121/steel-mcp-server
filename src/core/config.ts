@@ -148,7 +148,7 @@ export function loadConfig(env: Record<string, string | undefined>): SteelConfig
         connectUrl: env.STEEL_CONNECT_URL ?? (deployment === 'cloud' ? CLOUD_CONNECT_URL : toWebSocketUrl(baseUrl)),
         deployment,
         profile: profileName as ProfileName,
-        maxConcurrentSessions: deployment === 'self_hosted' ? 1 : parseIntEnv(env.STEEL_MAX_SESSIONS, 10),
+        maxConcurrentSessions: parseIntEnv(env.STEEL_MAX_SESSIONS, deployment === 'self_hosted' ? 1 : 10),
         inactivityTimeoutMs: parseIntEnv(env.STEEL_INACTIVITY_TIMEOUT_MS, DEFAULT_INACTIVITY_TIMEOUT_MS),
         sessionTimeoutMs: parseIntEnv(env.STEEL_SESSION_TIMEOUT_MS, DEFAULT_SESSION_TIMEOUT_MS),
         requestStateSecret: resolveRequestStateSecret(env.STEEL_REQUEST_STATE_SECRET),

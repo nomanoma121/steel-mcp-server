@@ -90,6 +90,11 @@ describe('loadConfig', () => {
         expect(config.maxConcurrentSessions).toBe(1);
     });
 
+    it('lets STEEL_MAX_SESSIONS raise the self-hosted session limit', () => {
+        const config = loadConfig({ STEEL_BASE_URL: 'http://localhost:3000', STEEL_MAX_SESSIONS: '5' });
+        expect(config.maxConcurrentSessions).toBe(5);
+    });
+
     it('reads the profile from the environment and rejects unknown names', () => {
         expect(loadConfig({ STEEL_API_KEY: 'k', STEEL_PROFILE: 'scrape' }).profile).toBe('scrape');
         expect(() => loadConfig({ STEEL_API_KEY: 'k', STEEL_PROFILE: 'turbo' })).toThrow(/turbo/);

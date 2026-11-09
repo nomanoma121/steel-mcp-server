@@ -209,7 +209,7 @@ export function registerSessionCreate(host: ToolHost, deps: ServerDeps): void {
 
                 const live = await deps.registry.countLive(deps.principal);
                 if (live >= deps.config.maxConcurrentSessions) {
-                    throw deps.config.deployment === 'self_hosted'
+                    throw deps.config.deployment === 'self_hosted' && deps.config.maxConcurrentSessions === 1
                         ? selfHostUnsupportedError('concurrency')
                         : new (await import('../errors.js')).SteelToolError(
                               `You already have ${live} live browser sessions, which is this deployment's limit. ` +

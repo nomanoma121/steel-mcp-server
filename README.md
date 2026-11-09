@@ -134,7 +134,7 @@ three, which never start a browser.
 | `STEEL_PROFILE` | `browse` | `browse` or `scrape` |
 | `STEEL_SESSION_TIMEOUT_MS` | `900000` | Default immutable session lifetime. A create request may choose up to 24 hours, within the account maximum |
 | `STEEL_INACTIVITY_TIMEOUT_MS` | `600000` | Idle release. Long enough for a handoff, so an abandoned browser can live about 10 minutes |
-| `STEEL_MAX_SESSIONS` | `10` | Live sessions plus pending creates per credential; enforced across replicas when using Redis |
+| `STEEL_MAX_SESSIONS` | `10` (`1` self-hosted) | Live sessions plus pending creates per credential; enforced across replicas when using Redis |
 | `STEEL_CONNECT_URL` | `wss://connect.steel.dev` | CDP endpoint, derived from the base URL when self-hosted |
 
 Logs are structured JSON on stderr; stdout carries nothing but JSON-RPC. The hosted endpoint has its

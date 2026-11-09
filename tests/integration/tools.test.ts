@@ -1102,6 +1102,23 @@ describe('steel_session_create', () => {
         }
     });
 
+    it('allows STEEL_MAX_SESSIONS sessions on a self-hosted deployment', async () => {
+        const h = await connect(
+            testDeps({
+                env: { STEEL_BASE_URL: 'http://localhost:3000', STEEL_API_KEY: undefined, STEEL_MAX_SESSIONS: '2' },
+            })
+        );
+        try {
+            await newSession(h);
+            await newSession(h);
+            const third = await h.client.callTool({ name: 'steel_session_create', arguments: {} });
+            expect(isError(third)).toBe(true);
+            expect(textOf(third)).toMatch(/2 live browser sessions/i);
+        } finally {
+            await h.close();
+        }
+    });
+
     it('names the self-host capability gap when a cloud-only option is requested', async () => {
         const h = await connect(
             testDeps({ env: { STEEL_BASE_URL: 'http://localhost:3000', STEEL_API_KEY: undefined } })
